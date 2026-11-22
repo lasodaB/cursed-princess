@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>저주받은 공주들을 독점했다</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+/* VOICE: 밤의 왕궁, 비밀스럽고 달콤한 남성향 판타지 — 짧고 세게
+   IDEA: 왕실 봉인 문서. 공주마다 저주 인장이 찍힌 카드
+   PICTURE: 첫 화면=세 공주 움짤, 저주 게이지가 실제로 차오르는 HUD
+   COLOUR: 자정 보라 바탕 + 공주별 색(얼음 하늘·자수정·체리핑크) + 은빛
+   TYPE: Black Han Sans(제목) + Noto Sans KR(본문) / LAYOUT: 폰 한 화면 폭 기둥, 인물 1명=1화면 이내 */
+:root{--bg:#0f0b16;--panel:#1a1424;--line:#2e2540;--ink:#f3eefb;--sub:#b6abc9;--silver:#dfe6f2;
+--ice:#8fd6ff;--ame:#b993ff;--pink:#ff86bd;--blood:#e0577a}
+*{box-sizing:border-box;min-width:0}
+html{background:#07050b}
+body{margin:0;color:var(--ink);font:16px/1.6 "Noto Sans KR",system-ui,sans-serif;overflow-x:clip;
+background:radial-gradient(120% 60% at 50% 0%,#2a1840 0%,transparent 60%),var(--bg)}
+.wrap{max-width:480px;margin:0 auto;background:var(--bg);min-height:100vh;box-shadow:0 0 80px #000}
+h1,h2{font-family:"Black Han Sans",sans-serif;font-weight:400;margin:0;letter-spacing:-.01em;text-wrap:balance}
+p{margin:0}
+
+/* hero */
+.hero{position:relative;aspect-ratio:600/806;overflow:hidden}
+.hero video,.hero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.hero::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 45%,rgba(15,11,22,.55) 68%,var(--bg) 97%)}
+.hero .t{position:absolute;left:0;right:0;bottom:22px;z-index:1;padding:0 22px;text-align:center}
+.hero h1{font-size:clamp(34px,10vw,46px);line-height:1.08;text-shadow:0 2px 0 #000,0 0 24px rgba(185,147,255,.55)}
+.hero .tag{margin-top:12px;display:inline-block;padding:8px 16px;border:1px solid rgba(223,230,242,.35);border-radius:999px;
+background:rgba(15,11,22,.7);font-weight:700;font-size:15px;color:var(--silver)}
+
+/* sections */
+.sec{padding:34px 20px}
+.sec h2{font-size:28px;line-height:1.15;margin-bottom:16px}
+.sec h2 small{display:block;font:500 14px "Noto Sans KR";color:var(--sub);margin-top:6px}
+
+/* setup steps */
+.steps{display:grid;gap:10px;margin:0;padding:0;list-style:none;counter-reset:s}
+.steps li{display:grid;grid-template-columns:34px 1fr;gap:12px;align-items:center;padding:14px 14px;
+background:var(--panel);border:1px solid var(--line);border-radius:14px;font-weight:500}
+.steps li::before{counter-increment:s;content:counter(s);display:grid;place-items:center;width:34px;height:34px;border-radius:50%;
+background:linear-gradient(135deg,var(--ame),var(--ice));color:#120c1c;font:900 16px "Noto Sans KR"}
+.steps b{color:var(--silver)}
+
+/* hud */
+.hud{background:#0b0811;border:1px solid var(--line);border-radius:16px;padding:16px;font-size:15px}
+.row{display:grid;grid-template-columns:86px 1fr 40px;gap:10px;align-items:center;margin:10px 0}
+.row .n{font-weight:700}
+.bar{height:12px;border-radius:99px;background:#241c33;overflow:hidden}
+.bar i{display:block;height:100%;width:0;border-radius:inherit;transition:width 1.4s cubic-bezier(.2,.8,.2,1)}
+.row .v{text-align:right;font-weight:900;font-variant-numeric:tabular-nums}
+.rules{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:14px}
+.rules div{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:12px 8px;text-align:center;font-size:14px;line-height:1.35}
+.rules b{display:block;font-size:16px;margin-bottom:4px}
+.knight{margin-top:12px;text-align:center;font-size:14px;color:var(--sub)}
+.knight b{color:var(--silver)}
+
+/* characters */
+.ch{position:relative;margin:0 0 22px;border-radius:20px;overflow:hidden;background:var(--panel);border:1px solid var(--line)}
+.ch .pic{position:relative;aspect-ratio:4/3}
+.ch .pic img{width:100%;height:100%;object-fit:cover;object-position:50% 22%;display:block}
+.ch .pic::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 55%,var(--panel))}
+.seal{position:absolute;top:12px;left:12px;z-index:1;padding:6px 12px;border-radius:999px;font-weight:900;font-size:13px;color:#120c1c;background:var(--c)}
+.ch .body{padding:0 18px 18px;margin-top:-34px;position:relative;z-index:1}
+.ch h3{margin:0;font:400 30px/1.1 "Black Han Sans";color:var(--c)}
+.ch h3 span{font:500 14px "Noto Sans KR";color:var(--sub);margin-left:8px}
+.ch .q{margin:10px 0 12px;padding:10px 14px;border-left:3px solid var(--c);background:rgba(255,255,255,.04);border-radius:0 10px 10px 0;font-weight:700}
+.ch ul{margin:0;padding:0;list-style:none;display:grid;gap:7px;font-size:15px}
+.ch li{display:grid;grid-template-columns:52px 1fr;gap:8px}
+.ch li b{color:var(--c);font-size:14px}
+.villain{--c:var(--blood);display:grid;grid-template-columns:120px 1fr;gap:14px;align-items:center;padding:14px;border-radius:20px;
+background:linear-gradient(135deg,#1d1020,#120c18);border:1px solid #3a2030}
+.villain img{width:120px;height:120px;object-fit:cover;object-position:50% 15%;border-radius:14px;filter:saturate(.8)}
+.villain h3{margin:0 0 6px;font:400 24px "Black Han Sans";color:var(--c)}
+.villain p{font-size:14.5px;color:var(--sub);line-height:1.5}
+.villain p b{color:var(--ink)}
+
+/* play points */
+.pts{display:grid;gap:10px}
+.pts div{display:grid;grid-template-columns:auto 1fr;gap:12px;align-items:start;padding:14px;border-radius:14px;background:var(--panel);border:1px solid var(--line)}
+.pts svg{width:28px;height:28px;margin-top:2px}
+.pts b{display:block;font-size:16px}
+.pts span{font-size:14.5px;color:var(--sub)}
+.end{padding:8px 20px 46px;text-align:center}
+.end p{font:400 26px/1.2 "Black Han Sans";background:linear-gradient(90deg,var(--ice),var(--ame),var(--pink));-webkit-background-clip:text;background-clip:text;color:transparent}
+
+.rv{opacity:0;transform:translateY(18px);transition:opacity .7s,transform .7s}
+.rv.on{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){.rv{opacity:1;transform:none;transition:none}.bar i{transition:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <video src="img/hero.mp4" poster="img/poster.jpg" autoplay muted loop playsinline></video>
+  <div class="t">
+    <h1>저주받은 공주들을<br>독점했다</h1>
+    <p class="tag">내 곁에서만, 저주가 멈춘다</p>
+  </div>
+</header>
+
+<section class="sec rv">
+  <h2>어떤 이야기?</h2>
+  <ol class="steps">
+    <li><span>당신은 왕궁에 막 들어온 <b>신임 호위기사</b></span></li>
+    <li><span>서임식 날, 왕비의 맹세석이 <b>당신에게만 반응</b></span></li>
+    <li><span>그 순간부터 <b>당신 곁에서만</b> 세 공주의 저주가 멈춘다</span></li>
+    <li><span><b>180일 뒤</b>, 공주들의 계승권 박탈 표결이 열린다</span></li>
+  </ol>
+</section>
+
+<section class="sec rv" id="curse">
+  <h2>저주 게이지<small>떨어져 있으면 차오르고, 100이 되면 끝</small></h2>
+  <div class="hud">
+    <div class="row"><span class="n" style="color:var(--ice)">세레니아</span><div class="bar"><i data-w="40" style="background:var(--ice)"></i></div><span class="v">40</span></div>
+    <div class="row"><span class="n" style="color:var(--ame)">이졸데</span><div class="bar"><i data-w="30" style="background:var(--ame)"></i></div><span class="v">30</span></div>
+    <div class="row"><span class="n" style="color:var(--pink)">루루</span><div class="bar"><i data-w="45" style="background:var(--pink)"></i></div><span class="v">45</span></div>
+  </div>
+  <div class="rules">
+    <div><b>곁에 있으면</b>저주 정지</div>
+    <div><b>떨어지면</b>매일 잠식↑</div>
+    <div><b>마음을 열면</b>잠식↓</div>
+  </div>
+  <p class="knight">하지만 기사는 <b>한 명</b>. 오늘은 누구 곁에 있을까?</p>
+</section>
+
+<section class="sec">
+  <h2>공주들</h2>
+
+  <article class="ch rv" style="--c:var(--ice)">
+    <div class="pic"><span class="seal">빙결의 저주</span><img src="img/sere.jpg" alt="세레니아"></div>
+    <div class="body">
+      <h3>세레니아<span>22 · 첫째 · 계승 1순위</span></h3>
+      <p class="q">"그대만은… 얼지 않는군."</p>
+      <ul>
+        <li><b>저주</b><span>맨손에 닿는 건 전부 얼어붙는다</span></li>
+        <li><b>성격</b><span>고고한 쿨데레, 혼자 다 짊어진다</span></li>
+        <li><b>포인트</b><span>당신 앞에서만 장갑을 벗는다</span></li>
+      </ul>
+    </div>
+  </article>
+
+  <article class="ch rv" style="--c:var(--ame)">
+    <div class="pic"><span class="seal">진실의 저주</span><img src="img/iso.jpg" alt="이졸데"></div>
+    <div class="body">
+      <h3>이졸데<span>21 · 둘째 · 검술 공주</span></h3>
+      <p class="q">"좋아하는 거 아니거든?! …아니, 좋아해."</p>
+      <ul>
+        <li><b>저주</b><span>거짓말을 하면 진심이 튀어나온다</span></li>
+        <li><b>성격</b><span>츤데레 하려다 매번 실패하는 새침이</span></li>
+        <li><b>포인트</b><span>고백은 본인보다 저주가 먼저 한다</span></li>
+      </ul>
+    </div>
+  </article>
+
+  <article class="ch rv" style="--c:var(--pink)">
+    <div class="pic"><span class="seal">묘화의 저주</span><img src="img/lulu.jpg" alt="루루"></div>
+    <div class="body">
+      <h3>루루<span>20 · 막내 · 소악마</span></h3>
+      <p class="q">"방금 그 냥, 못 들은 거야. 알았지?"</p>
+      <ul>
+        <li><b>저주</b><span>밤마다 고양이 귀와 꼬리가 돋는다</span></li>
+        <li><b>성격</b><span>먼저 놀리고 매달리는 장난꾸러기</span></li>
+        <li><b>포인트</b><span>밤이면 창문으로 몰래 놀러 온다</span></li>
+      </ul>
+    </div>
+  </article>
+
+  <div class="villain rv">
+    <img src="img/barth.jpg" alt="대공 바르트">
+    <div>
+      <h3>대공 바르트</h3>
+      <p>섭정을 맡은 공주들의 숙부.<br><b>늘 웃고 있지만</b>, 새 기사를 보는 눈만은 웃지 않는다.</p>
+    </div>
+  </div>
+</section>
+
+<section class="sec rv">
+  <h2>이렇게 플레이해요</h2>
+  <div class="pts">
+    <div><svg viewBox="0 0 24 24" fill="none" stroke="#8fd6ff" stroke-width="2"><path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6z"/></svg><p><b>누구 곁을 지킬지 고르기</b><span>일정이 겹치면 한 명만 지킬 수 있어요</span></p></div>
+    <div><svg viewBox="0 0 24 24" fill="none" stroke="#b993ff" stroke-width="2"><circle cx="11" cy="11" r="6"/><path d="M20 20l-4.5-4.5"/></svg><p><b>12년 전 그 밤의 진실 추적</b><span>왕비의 유품 3개와 단서를 모아요</span></p></div>
+    <div><svg viewBox="0 0 24 24" fill="none" stroke="#ff86bd" stroke-width="2"><path d="M12 20s-7-4.4-7-10a4 4 0 017-2.6A4 4 0 0119 10c0 5.6-7 10-7 10z"/></svg><p><b>세 공주의 마음 얻기</b><span>호감은 저절로 오르지 않아요. 쌓아야 해요</span></p></div>
+  </div>
+</section>
+
+<div class="end rv"><p>오늘 밤, 누구의 저주를<br>멈춰 주시겠어요?</p></div>
+
+</div>
+<script>
+{
+  const io=new IntersectionObserver(es=>{for(const e of es){if(!e.isIntersecting)continue;e.target.classList.add('on');
+    for(const b of e.target.querySelectorAll('.bar i'))b.style.width=b.dataset.w+'%';io.unobserve(e.target)}},{threshold:.2});
+  for(const el of document.querySelectorAll('.rv'))io.observe(el);
+  const v=document.querySelector('.hero video');
+  if(v){v.play().catch(()=>{})}
+}
+</script>
+</body>
+</html>
